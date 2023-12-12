@@ -1,26 +1,24 @@
-**Читати іншими мовами: [Русский](README.md), [Українська](README.ua.md).**
+# Phonebook
 
-# Телефонна книга
+Create an application for storing contacts in a phonebook.
 
-Напиши застосунок зберігання контактів телефонної книги.
+## Step 1
 
-## Крок 1
+The application should consist of a form and a list of contacts. At this stage, implement adding a contact's name and displaying the list of contacts. The application should not retain contacts between different sessions (page refreshes).
 
-Застосунок повинен складатися з форми і списку контактів. На поточному кроці реалізуй додавання імені контакту та відображення списку контактів. Застосунок не повинен зберігати контакти між різними сесіями (оновлення сторінки).
-
-Використовуйте цю розмітку інпуту з вбудованою валідацією для імені контакту.
+Use this input markup with built-in validation for the contact's name.
 
 ```html
 <input
   type="text"
   name="name"
   pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-  title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+  title="Name may contain only letters, apostrophe, dash, and spaces."
   required
 />
 ```
 
-Стан, що зберігається в батьківському компоненті `<App>`, обов'язково повинен бути наступного вигляду, додавати нові властивості не можна.
+The state stored in the parent component <App> must look like this, and adding new properties is not allowed.
 
 ```bash
 state = {
@@ -29,13 +27,13 @@ state = {
 }
 ```
 
-Кожен контакт повинен бути об'єктом з властивостями `name` та `id`. Для генерації ідентифікаторів використовуй будь-який відповідний пакет, наприклад [nanoid](https://www.npmjs.com/package/nanoid). Після завершення цього кроку, застосунок повинен виглядати приблизно так.
+Each contact should be an object with properties `name` and `id`. Use any suitable package like [nanoid](https://www.npmjs.com/package/nanoid) to generate identifiers. After completing this step, the application should look something like this.
 
 ![preview](./mockup/step-1.png)
 
-## Крок 2
+## Step 2
 
-Розшир функціонал застосунку, дозволивши користувачам додавати номери телефонів. Для цього додай `<input type="tel">` у форму і властивість для зберігання його значення в стані.
+Enhance the application's functionality by allowing users to add phone numbers. To achieve this, add `<input type="tel">` to the form and a property to store its value in the state.
 
 ```bash
 state = {
@@ -45,7 +43,7 @@ state = {
 }
 ```
 
-Використовуй цю розмітку інпуту з вбудованою валідацією для номеру контакту.
+Use this input markup with built-in validation for the contact number.
 
 ```html
 <input
@@ -57,16 +55,17 @@ state = {
 />
 ```
 
-Після завершення цього кроку, застосунок повинен виглядати приблизно так.
+After completing this step, the app should look something like this.
 
 ![preview](./mockup/step-2.png)
 
-## Крок 3
+## Step 3
 
-Додай поле пошуку, яке можна використовувати для фільтрації списку контактів за ім'ям.
+Add a search field that can be used to filter the list of contacts by name.
 
-- Поле пошуку – це інпут без форми, значення якого записується у стан (контрольований елемент).
-- Логіка фільтрації повинна бути нечутливою до регістру.
+- The search field is an input without a form, and its value is stored in the state (a controlled component).
+- The filtering logic should be case-insensitive.
+
 
 ```bash
 state = {
@@ -79,7 +78,7 @@ state = {
 
 ![preview](./mockup/step-3.gif)
 
-Коли ми працюємо над новим функціоналом, буває зручно жорстко закодувати деякі дані у стан. Це позбавить необхідності вручну вводити дані в інтерфейсі для тестування роботи нового функціоналу. Наприклад, можна використовувати такий початковий стан.
+When working on new functionality, it can be convenient to hardcode certain data into the state. This eliminates the need to manually input data into the interface for testing the new functionality. For instance, you can use such an initial state.
 
 ```bash
 state = {
@@ -95,9 +94,9 @@ state = {
 }
 ```
 
-## Крок 4
+## Step 4
 
-Якщо твій застосунок реалізований в одному компоненті `<App>`, виконай рефакторинг, виділивши відповідні частини в окремі компоненти. У стані кореневого компонента `<App>` залишаться тільки властивості `contacts` і `filter`.
+If your application is implemented within a single `<App>` component, refactor by extracting relevant parts into separate components. Only the properties `contacts` and `filter` should remain in the state of the root `<App>` component.
 
 ```bash
 state = {
@@ -106,9 +105,10 @@ state = {
 }
 ```
 
-Достатньо виділити чотири компоненти: форма додавання контактів, список контактів, елемент списку контактів та фільтр пошуку.
+To refactor, just distinguish four components: contact form, contact list, contact list item, and search filter.
 
-Після рефакторингу кореневий компонент програми виглядатиме так.
+After the refactoring, the root component of the program will look like this.
+
 
 ```jsx
 <div>
@@ -120,15 +120,14 @@ state = {
   <ContactList ... />
 </div>
 ```
+## Step 5
 
-## Крок 5
-
-Заборони користувачеві можливість додавати контакти, імена яких вже присутні у телефонній книзі. При спробі виконати таку дію виведи `alert` із попередженням.
+Prohibit the user from adding contacts whose names are already present in the phone book. When attempting to perform such an action, display an `alert` with a warning.
 
 ![preview](./mockup/step-5.png)
 
-## Крок 6
+## Step 6
 
-Розшир функціонал застосунку, дозволивши користувачеві видаляти раніше збережені контакти.
+Expand the application's functionality by allowing the user to delete previously saved contacts.
 
 ![preview](./mockup/step-6.gif)
